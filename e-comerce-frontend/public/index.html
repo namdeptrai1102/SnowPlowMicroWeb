@@ -18,6 +18,58 @@
       crossorigin="anonymous"
     />
     <title>JSOM-E-COM</title>
+    <script type="text/javascript" async=1>
+
+      ;(function(p,l,o,w,i,n,g){
+        if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];
+        p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
+        };p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
+        n.src=w;g.parentNode.insertBefore(n,g)}
+      }(
+        window,
+        document,
+        "script",
+        "https://e8614fc9-3c36-42ff-a962-c7ea6b24b825.app.try-snowplow.com/v3/try.js",
+        "snowplow")
+      );
+      
+      
+      snowplow("newTracker", "try", "https://e8614fc9-3c36-42ff-a962-c7ea6b24b825.app.try-snowplow.com", {
+        appId: "try-snowplow", // you can specify your own app name here
+        platform: "web",
+        
+        contexts: {
+          webPage: true, // this sets a unique id for each page view
+          performanceTiming: true // this captures performance metrics like load times
+        }
+      });
+      
+      // send first heartbeat after 10 seconds, and every 10 seconds thereafter
+      snowplow("enableActivityTracking", { minimumVisitLength: 10, heartbeatDelay: 10 });
+      snowplow("enableLinkClickTracking"); 
+      snowplow("trackPageView"); 
+      
+      </script>
+      <script>
+        function trackingProduct(){
+          var product_name = document.getElementsByClassName("info__name").value;
+          var product_price = document.getElementsByClassName("infor__price").value;
+          var product_description = document.getElementsByClassName("info__description").value;
+          //var product_id = document.getElementBy
+          window.snowplow('trackSelfDescribingEvent',{
+            event:{
+              schema:'iglu:com.trysnowplow/product/jsonschema/1-0-1',
+              data: {
+                product_name: product_name,
+                product_price: product_price,
+                product_description: product_description,
+                date_publisted: "20-5-2023",
+                author: "luong"
+              }
+            }
+          })
+        }
+      </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

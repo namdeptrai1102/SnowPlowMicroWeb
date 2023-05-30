@@ -1,7 +1,7 @@
 import './ProductScreen.css'
 import {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-
+//var name, productId, price;
 // Actions
 import {getProductDetails} from '../redux/actions/productActions'
 import {addToCart} from '../redux/actions/cartActions'
@@ -18,8 +18,27 @@ const ProductScreen = ({match, history}) => {
     if (product && match.params.id !== product._id) {
       dispatch(getProductDetails(match.params.id))
     }
-  }, [dispatch, match, product])
 
+    // Tracking into Snowplow
+    window.snowplow('trackSelfDescribingEvent', {
+      "event": {
+         "schema": "iglu:com.trysnowplow/cart_action/jsonschema/1-0-0",
+         "data": {
+            "type": "add" // or "remove"
+         }
+      },
+      "context": [{
+         "schema": "iglu:com.trysnowplow/product/jsonschema/1-0-0",
+         "data": {
+            "name": "example_name",
+            "quantity": 1,
+        "price": 100,
+        "category": "example_category",
+        "sku": "example_sku"
+         }
+      }]
+   });
+  }, [dispatch, match, product, qty])
   const addToCartHandler = () => {
     if (user.userInfo.isLogin) {
       dispatch(addToCart(product._id, qty))
@@ -33,10 +52,11 @@ const ProductScreen = ({match, history}) => {
   return (
     <div className="productscreen">
       {loading ? (
-        <h2>Loading...</h2>
+        <h2>Loading... </h2>
       ) : error ? (
         <h2>{error}</h2>
       ) : (
+        
         <>
           <div className="productscreen__left">
             <div className="left__image">
