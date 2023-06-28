@@ -5,7 +5,23 @@ import {useSelector, useDispatch} from 'react-redux'
 // Actions
 import {getProductDetails} from '../redux/actions/productActions'
 import {addToCart} from '../redux/actions/cartActions'
+import { trackSelfDescribingEvent, newTracker } from '@snowplow/browser-tracker';
 
+function testCustome() {
+  console.log("hello world");
+  trackSelfDescribingEvent({
+    event: {
+      schema: "iglu:test.example.iglu/product_entity/jsonschema/1-0-0",
+      data: {
+        sku: "test",
+        category: "may tinh",
+        name: "macbook m1",
+        price: 999,
+        quantity: 2
+      }
+    }
+  })
+}
 const ProductScreen = ({match, history}) => {
   const [qty, setQty] = useState(1)
   const user = useSelector(state => state.user)
@@ -17,27 +33,31 @@ const ProductScreen = ({match, history}) => {
   useEffect(() => {
     if (product && match.params.id !== product._id) {
       dispatch(getProductDetails(match.params.id))
+      newTracker('sp1', 'localhost:9090', {
+        appId: 'test',
+        plugins: [],
+      });
     }
-
+    testCustome();
     // Tracking into Snowplow
-    window.snowplow('trackSelfDescribingEvent', {
-      "event": {
-         "schema": "iglu:com.trysnowplow/cart_action/jsonschema/1-0-0",
-         "data": {
-            "type": "add" // or "remove"
-         }
-      },
-      "context": [{
-         "schema": "iglu:com.trysnowplow/product/jsonschema/1-0-0",
-         "data": {
-            "name": "example_name",
-            "quantity": 1,
-        "price": 100,
-        "category": "example_category",
-        "sku": "example_sku"
-         }
-      }]
-   });
+  //   window.snowplow('trackSelfDescribingEvent', {
+  //     "event": {
+  //        "schema": "iglu:test.example.iglu/cart_action_event/jsonschema/1-0-0",
+  //        "data": {
+  //           "type": "add" // or "remove"
+  //        }
+  //     },
+  //     "context": [{
+  //        "schema": "iglu:test.example.iglu/cart_action_event/jsonschema/1-0-0",
+  //        "data": {
+  //           "name": "example_name",
+  //           "quantity": 1,
+  //       "price": 100,
+  //       "category": "example_category",
+  //       "sku": "example_sku"
+  //        }
+  //     }]
+  //  });
   }, [dispatch, match, product, qty])
   const addToCartHandler = () => {
     if (user.userInfo.isLogin) {

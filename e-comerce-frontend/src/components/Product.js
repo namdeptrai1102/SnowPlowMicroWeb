@@ -39,24 +39,24 @@ const Product = ({ imageUrl, description, price, name, productId }) => {
         //  // var product_id = document.getElementById("product_id").value;
            alert(name + price)
     
-           window.snowplow('trackSelfDescribingEvent', {
-            "event": {
-               "schema": "iglu:com.trysnowplow/add/jsonschema/1-0-0",
-               "data": {
-                  "type": "add" // or "remove"
-               }
-            },
-            "context": [{
-               "schema": "iglu:com.trysnowplow/click/jsonschema/1-0-0",
-               "data": {
-                  "name": "example_name",
-                  "quantity": 1,
-              "price": 100,
-              "category": "example_category",
-              "sku": "example_sku"
-               }
-            }]
-         });
+        //    window.snowplow('trackSelfDescribingEvent', {
+        //     "event": {
+        //        "schema": "iglu:com.trysnowplow/add/jsonschema/1-0-0",
+        //        "data": {
+        //           "type": "add" // or "remove"
+        //        }
+        //     },
+        //     "context": [{
+        //        "schema": "iglu:com.trysnowplow/click/jsonschema/1-0-0",
+        //        "data": {
+        //           "name": "example_name",
+        //           "quantity": 1,
+        //       "price": 100,
+        //       "category": "example_category",
+        //       "sku": "example_sku"
+        //        }
+        //     }]
+        //  });
         }
 
         }>
