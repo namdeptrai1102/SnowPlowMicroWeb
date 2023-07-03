@@ -7,17 +7,15 @@ import {getProductDetails} from '../redux/actions/productActions'
 import {addToCart} from '../redux/actions/cartActions'
 import { trackSelfDescribingEvent, newTracker } from '@snowplow/browser-tracker';
 
-function testCustome() {
+function testCustome(name) {
   console.log("hello world");
   trackSelfDescribingEvent({
     event: {
-      schema: "iglu:test.example.iglu/product_entity/jsonschema/1-0-0",
+      schema: "iglu:test.example.iglu/product/jsonschema/1-0-0",
       data: {
-        sku: "test",
-        category: "may tinh",
-        name: "macbook m1",
-        price: 999,
-        quantity: 2
+        //product_id: id,
+        product_name: name,
+        //price: price
       }
     }
   })
@@ -30,7 +28,11 @@ const ProductScreen = ({match, history}) => {
   const productDetails = useSelector(state => state.getProductDetails)
   const {loading, error, product} = productDetails
 
-  useEffect(() => {
+  useEffect(() => { 
+    //const product_id = product && product._id;
+    const name = product && product.name;
+    const price = product && product.price;
+    console.log(product);
     if (product && match.params.id !== product._id) {
       dispatch(getProductDetails(match.params.id))
       newTracker('sp1', 'localhost:9090', {
@@ -38,26 +40,8 @@ const ProductScreen = ({match, history}) => {
         plugins: [],
       });
     }
-    testCustome();
-    // Tracking into Snowplow
-  //   window.snowplow('trackSelfDescribingEvent', {
-  //     "event": {
-  //        "schema": "iglu:test.example.iglu/cart_action_event/jsonschema/1-0-0",
-  //        "data": {
-  //           "type": "add" // or "remove"
-  //        }
-  //     },
-  //     "context": [{
-  //        "schema": "iglu:test.example.iglu/cart_action_event/jsonschema/1-0-0",
-  //        "data": {
-  //           "name": "example_name",
-  //           "quantity": 1,
-  //       "price": 100,
-  //       "category": "example_category",
-  //       "sku": "example_sku"
-  //        }
-  //     }]
-  //  });
+    testCustome(name);
+
   }, [dispatch, match, product, qty])
   const addToCartHandler = () => {
     if (user.userInfo.isLogin) {
