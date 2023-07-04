@@ -7,15 +7,16 @@ import {getProductDetails} from '../redux/actions/productActions'
 import {addToCart} from '../redux/actions/cartActions'
 import { trackSelfDescribingEvent, newTracker } from '@snowplow/browser-tracker';
 
-function testCustome(name) {
-  console.log("hello world");
+function testCustome(_id,name,price,countInStock) {
+  //console.log("hello world");
   trackSelfDescribingEvent({
     event: {
       schema: "iglu:test.example.iglu/product/jsonschema/1-0-0",
       data: {
-        //product_id: id,
+        product_id: String(_id),
         product_name: name,
-        //price: price
+        price: parseInt(price),
+        remaining: parseInt(countInStock)
       }
     }
   })
@@ -29,9 +30,10 @@ const ProductScreen = ({match, history}) => {
   const {loading, error, product} = productDetails
 
   useEffect(() => { 
-    //const product_id = product && product._id;
+    const product_id = product && product._id;
     const name = product && product.name;
     const price = product && product.price;
+    const remaining = product && product.countInStock;
     console.log(product);
     if (product && match.params.id !== product._id) {
       dispatch(getProductDetails(match.params.id))
@@ -40,7 +42,7 @@ const ProductScreen = ({match, history}) => {
         plugins: [],
       });
     }
-    testCustome(name);
+    testCustome(product_id,name, price, remaining);
 
   }, [dispatch, match, product, qty])
   const addToCartHandler = () => {

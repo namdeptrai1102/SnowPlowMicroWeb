@@ -10,7 +10,7 @@
     "type": "object",
     "properties": {
         "product_id": {
-            "type": "integer",
+            "type": "string",
             "description": "định danh của sản phẩm"
         },
         "product_name": {
@@ -24,6 +24,10 @@
         "price": {
             "type": "integer",
             "description": "giá của sản phẩm"
+        },
+        "remaining":{
+            "type": "integer",
+            "description": "số lượng sản phẩm trong kho"
         }
     },
     "required": [

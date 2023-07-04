@@ -37,7 +37,7 @@ const Product = ({ imageUrl, description, price, name, productId }) => {
         //   // var product_price = document.getElementsById("info__price").value;
         //   // var product_description = document.getElementsById("info__description").value;
         //  // var product_id = document.getElementById("product_id").value;
-           alert(name + price)
+       //   alert(name + price)
     
         //    window.snowplow('trackSelfDescribingEvent', {
         //     "event": {
