@@ -8,6 +8,9 @@ import CartItem from "../components/CartItem";
 // Actions
 import { addToCart, removeFromCart } from "../redux/actions/cartActions";
 import useLogin from "../utils/hooks/useLogin";
+import { RemoveProduct } from "../Tracker";
+
+
 
 const CartScreen = () => {
   const dispatch = useDispatch();
@@ -23,6 +26,7 @@ const CartScreen = () => {
   };
 
   const removeFromCartHandler = (item) => {
+    RemoveProduct();
     dispatch(removeFromCart({ pId: item.product, _id: item._id }));
   };
 

@@ -21,7 +21,7 @@
             "type": "integer",
             "description": "số lượng sản phẩm được mua"
         },
-        "price": {
+        "product_price": {
             "type": "integer",
             "description": "giá của sản phẩm"
         }

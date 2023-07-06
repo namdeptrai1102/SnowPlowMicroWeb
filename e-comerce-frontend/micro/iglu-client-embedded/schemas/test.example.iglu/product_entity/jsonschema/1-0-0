@@ -14,7 +14,10 @@
             "maxLength": 64
         },
         "category": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "maxLength": 255
         },
         "name": {
@@ -33,6 +36,9 @@
             "maximum": 10000
         }
     },
-    "required": ["sku", "name", "price", "quantity"],
+    "required": [
+        "name",
+        "price"
+    ],
     "additionalProperties": false
 }

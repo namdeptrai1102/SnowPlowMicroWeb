@@ -4,31 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getProductDetails } from '../redux/actions/productActions'
 import { addToCart } from '../redux/actions/cartActions'
 import { trackSelfDescribingEvent, newTracker, trackPageView } from '@snowplow/browser-tracker';
+import { ViewProduct, AddProduct, CreatNewTracker } from '../Tracker'
 
-function ViewProduct(product_name, product_price) {
-  // trackSelfDescribingEvent({
-  //   event: {
-  //     schema: "iglu:test.example/product_view/jsonschema/1-0-0",
-  //     data: {
-  //       product_name: "macbook",
-  //       // price: 123,
-  //     }
-  //   }
-  // })
-
-  trackSelfDescribingEvent({
-    event: {
-      schema: "iglu:test.example/product_enity/jsonschema/1-0-0",
-      data: {
-        sku: "apple",
-        category: "iphone",
-        name: "iphone14",
-        price: 999,
-        quantity: 4,
-      }
-    }
-  })
-}
 
 const ProductScreen = ({ match, history }) => {
   const [qty, setQty] = useState(1)
@@ -41,23 +18,26 @@ const ProductScreen = ({ match, history }) => {
   useEffect(() => {
     const product_name = product && product.name;
     const product_price = product && product.price;
+    const product_id = product && product._id;
     console.log(product_name + product_price);
 
     if (product && match.params.id !== product._id) {
       dispatch(getProductDetails(match.params.id))
-      newTracker('tracking_product', 'localhost:9090', {
-        appId: 'ecomerceshop',
-        plugins: [],
-      });
+      CreatNewTracker();
     }
-    ViewProduct(product_name, product_price);
+    ViewProduct(product_name, product_price, product_id);
+    console.log("tests");
 
-
-  }, [dispatch, match, product, qty])
+  }, [])
   const addToCartHandler = () => {
     if (user.userInfo.isLogin) {
       dispatch(addToCart(product._id, qty))
       history.push(`/cart`)
+      const product_name = product && product.name;
+      const product_price = product && product.price;
+      const product_id = product && product._id;
+      AddProduct(product_name, product_price, product_id);
+      // log
       return
     } else {
       alert('You need to first login.')

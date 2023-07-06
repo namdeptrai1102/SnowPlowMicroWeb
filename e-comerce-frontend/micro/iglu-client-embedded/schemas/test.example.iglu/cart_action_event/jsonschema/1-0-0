@@ -11,9 +11,15 @@
     "properties": {
         "type": {
             "type": "string",
-            "enum": ["add", "remove"]
+            "enum": [
+                "add",
+                "remove",
+                "view"
+            ]
         }
     },
-    "required": ["type"],
+    "required": [
+        "type"
+    ],
     "additionalProperties": false
 }
