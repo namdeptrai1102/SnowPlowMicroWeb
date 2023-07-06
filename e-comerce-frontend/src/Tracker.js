@@ -9,11 +9,9 @@ function ViewProduct(name, price, id) {
             }
         },
         context: {
-            schema: "iglu:test.example.iglu/product_context/jsonschema/1-0-0",
+            schema: "iglu:test.example.iglu/product_entity/jsonschema/1-0-0",
             data: {
-                product_name: name,
-                product_price: parseInt(price),
-                product_id: parseInt(id)
+                name: name,
             }
         }
     })
@@ -29,11 +27,9 @@ function AddProduct(name, price, id) {
             }
         },
         context: {
-            schema: "iglu:test.example.iglu/product_context/jsonschema/1-0-0",
+            schema: "iglu:test.example.iglu/product_entity/jsonschema/1-0-0",
             data: {
-                product_name: name,
-                product_price: parseInt(price),
-                product_id: parseInt(id)
+                name: name,
             }
         }
     })
@@ -52,7 +48,6 @@ function RemoveProduct(name, price, id) {
             schema: "iglu:test.example.iglu/product_entity/jsonschema/1-0-0",
             data: {
                 name: name,
-                price: parseInt(price),
             }
         }
     })

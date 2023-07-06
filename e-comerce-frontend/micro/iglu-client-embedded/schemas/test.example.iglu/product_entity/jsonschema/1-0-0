@@ -37,8 +37,7 @@
         }
     },
     "required": [
-        "name",
-        "price"
+        "name"
     ],
     "additionalProperties": false
 }
