@@ -3,18 +3,20 @@ import { trackSelfDescribingEvent, newTracker, trackPageView } from '@snowplow/b
 function ViewProduct(name, price, id) {
     trackSelfDescribingEvent({
         event: {
-            schema: "iglu:test.example.iglu/cart_action_event/jsonschema/1-0-0",
+            schema: 'iglu:test.example.iglu/cart_action_event/jsonschema/1-0-0',
             data: {
                 type: 'view',
-            }
+            },
         },
-        context: {
-            schema: "iglu:test.example.iglu/product_entity/jsonschema/1-0-0",
-            data: {
-                name: name,
+        context: [
+            {
+                schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
+                data: {
+                    name: "iphone 14",
+                }
             }
-        }
-    })
+        ]
+    });
 }
 
 function AddProduct(name, price, id) {
@@ -26,12 +28,14 @@ function AddProduct(name, price, id) {
                 type: 'add',
             }
         },
-        context: {
-            schema: "iglu:test.example.iglu/product_entity/jsonschema/1-0-0",
-            data: {
-                name: name,
+        context: [
+            {
+                schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
+                data: {
+                    name: name,
+                }
             }
-        }
+        ]
     })
 }
 
@@ -44,12 +48,14 @@ function RemoveProduct(name, price, id) {
                 type: 'remove',
             }
         },
-        context: {
-            schema: "iglu:test.example.iglu/product_entity/jsonschema/1-0-0",
-            data: {
-                name: name,
+        context: [
+            {
+                schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
+                data: {
+                    name: name,
+                }
             }
-        }
+        ]
     })
 }
 
