@@ -26,7 +26,8 @@ const CartScreen = () => {
   };
 
   const removeFromCartHandler = (item) => {
-    RemoveProduct();
+    console.log(item);
+    console.log("test remove");
     dispatch(removeFromCart({ pId: item.product, _id: item._id }));
   };
 

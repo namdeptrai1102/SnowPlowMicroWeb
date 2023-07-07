@@ -9,9 +9,8 @@
     },
     "type": "object",
     "properties": {
-        "sku": {
-            "type": "string",
-            "maxLength": 64
+        "id": {
+            "type": "string"
         },
         "category": {
             "type": [
@@ -25,10 +24,7 @@
             "maxLength": 255
         },
         "price": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 100000,
-            "multipleOf": 0.01
+            "type": "number"
         },
         "quantity": {
             "type": "integer",

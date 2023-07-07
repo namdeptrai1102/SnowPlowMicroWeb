@@ -1,6 +1,7 @@
 import { trackSelfDescribingEvent, newTracker, trackPageView } from '@snowplow/browser-tracker';
 
 function ViewProduct(name, price, id) {
+    console.log("view" + typeof (name) + typeof (price) + typeof (id));
     trackSelfDescribingEvent({
         event: {
             schema: 'iglu:test.example.iglu/cart_action_event/jsonschema/1-0-0',
@@ -12,15 +13,17 @@ function ViewProduct(name, price, id) {
             {
                 schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
                 data: {
-                    name: "iphone 14",
+                    name: String(name),
+                    price: price,
+                    id: String(id)
                 }
             }
         ]
     });
 }
 
-function AddProduct(name, price, id) {
-    console.log("hello world");
+function AddProduct(name, price, id, qty) {
+    console.log("add" + typeof (name) + typeof (price) + typeof (id) + typeof (qty));
     trackSelfDescribingEvent({
         event: {
             schema: "iglu:test.example.iglu/cart_action_event/jsonschema/1-0-0",
@@ -32,15 +35,18 @@ function AddProduct(name, price, id) {
             {
                 schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
                 data: {
+                    id: id,
                     name: name,
+                    price: price,
+                    quantity: qty
                 }
             }
         ]
     })
 }
 
-function RemoveProduct(name, price, id) {
-    console.log("hello world");
+function RemoveProduct(name, price, id, qty) {
+    console.log("remove" + typeof (name) + typeof (price) + typeof (id) + typeof (qty));
     trackSelfDescribingEvent({
         event: {
             schema: "iglu:test.example.iglu/cart_action_event/jsonschema/1-0-0",
@@ -52,7 +58,10 @@ function RemoveProduct(name, price, id) {
             {
                 schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
                 data: {
+                    id: id,
                     name: name,
+                    price: price,
+                    quantity: qty
                 }
             }
         ]
