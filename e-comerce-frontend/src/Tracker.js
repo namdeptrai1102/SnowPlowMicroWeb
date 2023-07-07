@@ -12,7 +12,8 @@ function ViewProduct(name, price, id) {
             {
                 schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
                 data: {
-                    name: "iphone 14",
+                    name: String(name),
+                    price: price
                 }
             }
         ]
@@ -32,7 +33,7 @@ function AddProduct(name, price, id) {
             {
                 schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
                 data: {
-                    name: name,
+                    name: "iphone 15",
                 }
             }
         ]
@@ -52,7 +53,7 @@ function RemoveProduct(name, price, id) {
             {
                 schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
                 data: {
-                    name: name,
+                    name: "iphone 16",
                 }
             }
         ]
