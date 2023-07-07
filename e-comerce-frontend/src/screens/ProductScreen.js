@@ -9,6 +9,7 @@ import { ViewProduct, AddProduct, CreatNewTracker } from '../Tracker'
 
 const ProductScreen = ({ match, history }) => {
   const [qty, setQty] = useState(1)
+  const [tracked, setTracked] = useState(false)
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
@@ -16,19 +17,20 @@ const ProductScreen = ({ match, history }) => {
   const { loading, error, product } = productDetails
 
   useEffect(() => {
-    const product_name = product && product.name;
-    const product_price = product && product.price;
-    const product_id = product && product._id;
-    console.log(product_name + product_price);
-
-    if (product && match.params.id !== product._id) {
+    if ((product && match.params.id !== product._id) || !product) {
       dispatch(getProductDetails(match.params.id))
-      CreatNewTracker();
     }
-    ViewProduct(product_name, product_price, product_id);
+    if (product && Object.keys(product).length > 0 && !tracked) {
+      console.log("Product: ", product);
+      const product_name = product && product.name;
+      const product_price = product && product.price;
+      const product_id = product && product._id;
+      ViewProduct(product_name, product_price, product_id);
+      setTracked(true);
+    }
     console.log("tests");
 
-  }, [])
+  }, [product])
   const addToCartHandler = () => {
     if (user.userInfo.isLogin) {
       dispatch(addToCart(product._id, qty))
@@ -36,7 +38,8 @@ const ProductScreen = ({ match, history }) => {
       const product_name = product && product.name;
       const product_price = product && product.price;
       const product_id = product && product._id;
-      AddProduct(product_name, product_price, product_id);
+      const product_qty = qty;
+      AddProduct(product_name, product_price, product_id, product_qty);
       // log
       return
     } else {
@@ -77,7 +80,7 @@ const ProductScreen = ({ match, history }) => {
               </p>
               <p>
                 Qty
-                <select value={qty} onChange={e => setQty(e.target.value)}>
+                <select value={qty} onChange={e => setQty(parseInt(e.target.value))}>
                   {[...Array(product.countInStock).keys()].map(x => (
                     <option key={x + 1} value={x + 1}>
                       {x + 1}

@@ -1,7 +1,14 @@
+import { RemoveProduct } from "../Tracker";
 import "./CartItem.css";
 import { Link } from "react-router-dom";
 
 const CartItem = ({ item, qtyChangeHandler, removeHandler }) => {
+  console.log(item);
+  const handleRemove = () => {
+    RemoveProduct(item.name, item.price, item.product, parseInt(item.qty));
+    removeHandler(item.product);
+  }
+
   return (
     <div className="cartitem">
       <div className="cartitem__image">
@@ -24,7 +31,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler }) => {
       </select>
       <button
         className="cartItem__deleteBtn"
-        onClick={() => removeHandler(item.product)}
+        onClick={handleRemove}
       >
         <i className="fas fa-trash"></i>
       </button>
