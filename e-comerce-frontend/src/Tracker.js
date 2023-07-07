@@ -12,8 +12,9 @@ function ViewProduct(name, price, id) {
             {
                 schema: 'iglu:test.example.iglu/product_entity/jsonschema/1-0-0',
                 data: {
-                    name: "iphone 14",
-                }
+                    name: "iphone 15",
+                },
+                
             }
         ]
     });
